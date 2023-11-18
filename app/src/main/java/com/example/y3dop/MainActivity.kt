@@ -1,14 +1,8 @@
 package com.example.y3dop
 
+import android.content.Intent
 import android.os.Bundle
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.navigation.findNavController
-import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.setupActionBarWithNavController
-import androidx.navigation.ui.setupWithNavController
-import com.example.y3dop.databinding.ActivityMainBinding
-
 
 
 class MainActivity : AppCompatActivity() {
@@ -20,6 +14,10 @@ class MainActivity : AppCompatActivity() {
         // Asignar acciones a los botones
         loadFilesButton.setOnClickListener {
         // Agregar la lógica para cargar archivos aquí
+            val intent = Intent(Intent.ACTION_OPEN_DOCUMENT)
+            intent.addCategory(Intent.CATEGORY_OPENABLE)
+            intent.setType("file/*")
+            startActivityForResult(intent, 1)
         }
 
         bluetoothButton.setOnClickListener {
@@ -38,6 +36,7 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
+
         playButton.setOnClickListener {
         // Agregar la lógica para reproducir aquí
         }
@@ -50,4 +49,14 @@ class MainActivity : AppCompatActivity() {
         // Agregar la lógica para configuración aquí
         }
     }
+
+    // Override onActivityResult to handle the selected file
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (resultCode == RESULT_OK) {
+            val uri = data?.data
+            // Do something with the URI
+        }
+    }
+
 }
